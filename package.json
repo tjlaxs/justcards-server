@@ -1,0 +1,22 @@
+{
+  "name": "justcards",
+  "version": "0.0.1",
+  "description": "Justcards server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjlaxs/justcards-server.git"
+  },
+  "keywords": [
+    "justcards"
+  ],
+  "author": "Tero Laxström",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/tjlaxs/justcards-server/issues"
+  },
+  "homepage": "https://github.com/tjlaxs/justcards-server#readme"
+}
