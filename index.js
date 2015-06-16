@@ -10,23 +10,23 @@ var serverOptions = {
     port: 3433
 };
 
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('https').createServer(options, app);
 var io = require('socket.io').listen(server);
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/client/index.html');
-});
-
-app.get('/jquery.js', function(req, res){
-    res.sendFile(__dirname + '/client/jquery.js');
-});
+app.use('/', express.static(__dirname + '/../justcards-client'));
 
 io.on('connection', function(socket){
     console.log('a user connected');
     
     socket.on('join', function (name) {
         console.log(name + ' joined');
+    });
+    
+    socket.on('send msg', function (data) {
+        io.emit('get msg', data);
+        console.log(data);
     });
     
     socket.on('disconnect', function() {
