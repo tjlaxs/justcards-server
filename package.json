@@ -21,6 +21,7 @@
   "homepage": "https://github.com/tjlaxs/justcards-server#readme",
   "dependencies": {
     "express": "^4.12.4",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.5",
+    "sqlite3": "^3.0.8"
   }
 }
