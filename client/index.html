@@ -14,12 +14,13 @@
     </style>
   </head>
   <body>
+      <div class="status"></div>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="jquery.js"></script>
     <script>
         var socket = io();
         $('form').submit(function(){
@@ -27,6 +28,14 @@
             $('#m').val('');
             return false;
         });
+        
+        socket.on('connect', function (data) {            
+            sessionId = socket.io.engine.id;
+            console.log('Connected to server:' + sessionId);
+            nickname = prompt("What is your nickname?");
+            socket.emit('join', nickname);
+        });
+        
         socket.on('chat message', function(msg){
             $('#messages').append($('<li>').text(msg));
         });
