@@ -22,7 +22,7 @@ app.use('/', express.static(__dirname + '/../justcards-client'));
 
 app.post('/upload', function (req, res, next) {
     /* TODO: update this to db */
-    var form = new multiparty.Form({uploadDir: serverOptions.dataDir});
+    var form = new multiparty.Form();
     var image;
     var title;
     
@@ -42,6 +42,15 @@ app.post('/upload', function (req, res, next) {
         image.size = 0;
         part.on('data', function (buf) {
             image.size += buf.length;
+        });
+    });
+    form.on('file', function (name, file) {
+        console.log('got:' + file.path);
+        console.log('put' + serverOptions.dataDir + file.originalFilename);
+        fs.renameSync(file.path, serverOptions.dataDir + file.originalFilename, function (err) {
+            if (err) {
+                console.error(err.stack);
+            }
         });
     });
     
