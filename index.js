@@ -45,8 +45,6 @@ app.post('/upload', function (req, res, next) {
         });
     });
     form.on('file', function (name, file) {
-        console.log('got:' + file.path);
-        console.log('put' + serverOptions.dataDir + file.originalFilename);
         fs.renameSync(file.path, serverOptions.dataDir + file.originalFilename, function (err) {
             if (err) {
                 console.error(err.stack);
