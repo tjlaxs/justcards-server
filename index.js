@@ -1,3 +1,7 @@
+/* jshint strict: true, esnext: true */
+/* global require, module */
+(function() {
+"use strict";
 const crypto = require('crypto'),
       fs = require('fs');
 
@@ -18,7 +22,7 @@ var server = require('https').createServer(options, app);
 var io = require('socket.io').listen(server);
 var multiparty = require('multiparty');
 
-app.use('/', express.static(__dirname + '/../justcards-client'));
+app.use('/', express.static(__dirname + '/' + '../justcards-client'));
 
 app.post('/upload', function (req, res, next) {
     /* TODO: update this to db */
@@ -29,6 +33,9 @@ app.post('/upload', function (req, res, next) {
     form.on('error', next);
     form.on('close', function () {
         res.send('\nuploaded file');
+        /* straight sql query or some model?
+        model.newImage(name, path, owner, 
+            Id INTEGER PRIMARY KEY, Name TEXT, Path TEXT, Owner INTEGER, FOREIGN KEY(Owner) REFERENCES User(Id)*/
     });
     form.on('part', function (part) {
         if (!part.filename) {
@@ -37,7 +44,7 @@ app.post('/upload', function (req, res, next) {
         if (part.name !== 'image') {
             return part.resume();
         }
-        image = {}
+        image = {};
         image.filename = part.filename;
         image.size = 0;
         part.on('data', function (buf) {
@@ -75,3 +82,5 @@ io.on('connection', function(socket){
 server.listen(serverOptions.port, function() {
     console.log("listening on *:" + serverOptions.port);
 });
+
+})();
